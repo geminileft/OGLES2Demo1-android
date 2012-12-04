@@ -101,7 +101,8 @@ public class OGLES2Renderer implements GLSurfaceView.Renderer {
 	    final float bottomY = HALF_HEIGHT - SIZE;
 	    
         FloatBuffer verticesBuffer;
-        
+
+        /*
 	    //set vertices and pass to shader
 	    final float verticesTriangle[] = {
 	    	leftX - offset, bottomY + offset
@@ -110,6 +111,17 @@ public class OGLES2Renderer implements GLSurfaceView.Renderer {
 	        , rightX - offset, bottomY + offset
 	        , leftX - offset, topY + offset
 	        , rightX - offset, topY + offset
+	    };
+	    */
+        
+	    //set vertices and pass to shader
+	    final float verticesTriangle[] = {
+	    	leftX, bottomY - offset
+	        , rightX, bottomY - offset
+	        , leftX, topY - offset
+	        , rightX, bottomY - offset
+	        , leftX, topY - offset
+	        , rightX, topY - offset
 	    };
 	    
         verticesBuffer = ByteBuffer.allocateDirect(verticesTriangle.length
