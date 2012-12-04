@@ -101,7 +101,8 @@ public class OGLES2Renderer implements GLSurfaceView.Renderer {
 	    final float bottomY = HALF_HEIGHT - SIZE;
 	    
         FloatBuffer verticesBuffer;
-
+        
+        //triangle strip
 	    final float verticesTriangleStrip[] = {
 	    	leftX - offset, bottomY + offset
 	        , leftX - offset, topY + offset
@@ -113,8 +114,21 @@ public class OGLES2Renderer implements GLSurfaceView.Renderer {
         verticesBuffer.put(verticesTriangleStrip).position(0);
 		GLES20.glVertexAttribPointer(maVertices, 2, GLES20.GL_FLOAT, false, 0, verticesBuffer);
 	    GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, 4);
-        
-	    //set vertices and pass to shader
+
+	    //triangle fan
+	    final float verticesTriangleFan[] = {
+	    	leftX + offset, bottomY + offset
+	        , leftX + offset, topY + offset
+	        , rightX + offset, topY + offset
+	        , rightX + offset, bottomY + offset
+	    };
+        verticesBuffer = ByteBuffer.allocateDirect(verticesTriangleFan.length
+                * FLOAT_SIZE).order(ByteOrder.nativeOrder()).asFloatBuffer();
+        verticesBuffer.put(verticesTriangleFan).position(0);
+		GLES20.glVertexAttribPointer(maVertices, 2, GLES20.GL_FLOAT, false, 0, verticesBuffer);
+	    GLES20.glDrawArrays(GLES20.GL_TRIANGLE_FAN, 0, 4);
+	    
+	    //triangles
 	    final float verticesTriangle[] = {
 	    	leftX, bottomY - offset
 	        , rightX, bottomY - offset
