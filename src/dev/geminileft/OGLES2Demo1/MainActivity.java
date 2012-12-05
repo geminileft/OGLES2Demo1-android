@@ -8,11 +8,11 @@ public class MainActivity extends Activity {
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        GraphicsUtils.setContext(this);
-        GLSurfaceView view = new GLSurfaceView(this);
-        OGLES2Renderer renderer = new OGLES2Renderer(view);
-        view.setRenderer(renderer);
-   		setContentView(view);
+		super.onCreate(savedInstanceState);
+		GraphicsUtils.setContext(this);
+		GLSurfaceView view = new GLSurfaceView(this);
+		OGLES2Renderer renderer = new OGLES2Renderer(view);
+		view.setRenderer(renderer);
+		setContentView(view);
     }
 }
