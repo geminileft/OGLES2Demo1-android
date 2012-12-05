@@ -16,6 +16,7 @@ public class OGLES2Renderer implements GLSurfaceView.Renderer {
 	//size in bytes of float
     private final int FLOAT_SIZE = 4;
     private int maVertices;
+    private int maColor;
     private int mWidth;
     private int mHeight;
     
@@ -32,29 +33,15 @@ public class OGLES2Renderer implements GLSurfaceView.Renderer {
 		String fSource;
 		vSource = GraphicsUtils.readShaderFile("texture.vsh");
 		fSource = GraphicsUtils.readShaderFile("texture.fsh");
-		int progId = GraphicsUtils.createProgram(vSource, fSource);
+		final int progId = GraphicsUtils.createProgram(vSource, fSource);
 		GraphicsUtils.activateProgram(progId);
 		GLES20.glClearColor(0, 0, 0, 1);
 		
 		//read attribute locations and enable
-		int aColor = GLES20.glGetAttribLocation(GraphicsUtils.currentProgramId(), "aColor");
-		GLES20.glEnableVertexAttribArray(aColor);
-		maVertices = GLES20.glGetAttribLocation(GraphicsUtils.currentProgramId(), "aVertices");
+		maColor = GLES20.glGetAttribLocation(progId, "aColor");
+		GLES20.glEnableVertexAttribArray(maColor);
+		maVertices = GLES20.glGetAttribLocation(progId, "aVertices");
 		GLES20.glEnableVertexAttribArray(maVertices);
-
-		//set color buffer and pass to shader
-	    float colors[] = {
-	        1.0f, 0.0f, 0.0f, 0.0f
-	        , 1.0f, 0.0f, 0.0f, 0.0f
-	        , 1.0f, 0.0f, 0.0f, 0.0f
-	        , 1.0f, 0.0f, 0.0f, 0.0f
-	        , 1.0f, 0.0f, 0.0f, 0.0f
-	        , 1.0f, 0.0f, 0.0f, 0.0f
-	    };
-        FloatBuffer colorBuffer = ByteBuffer.allocateDirect(colors.length
-                * FLOAT_SIZE).order(ByteOrder.nativeOrder()).asFloatBuffer();
-        colorBuffer.put(colors).position(0);
-	    GLES20.glVertexAttribPointer(aColor, 4, GLES20.GL_FLOAT, false, 0, colorBuffer);
 	}
 
 	@Override
@@ -86,6 +73,20 @@ public class OGLES2Renderer implements GLSurfaceView.Renderer {
 	public void onDrawFrame(GL10 arg0) {
 		//clear screen
 	    GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
+
+		//set color buffer and pass to shader
+	    float colors[] = {
+	        1.0f, 0.0f, 0.0f, 0.0f
+	        , 1.0f, 0.0f, 0.0f, 0.0f
+	        , 1.0f, 0.0f, 0.0f, 0.0f
+	        , 1.0f, 0.0f, 0.0f, 0.0f
+	        , 1.0f, 0.0f, 0.0f, 0.0f
+	        , 1.0f, 0.0f, 0.0f, 0.0f
+	    };
+        FloatBuffer colorBuffer = ByteBuffer.allocateDirect(colors.length
+                * FLOAT_SIZE).order(ByteOrder.nativeOrder()).asFloatBuffer();
+        colorBuffer.put(colors).position(0);
+	    GLES20.glVertexAttribPointer(maColor, 4, GLES20.GL_FLOAT, false, 0, colorBuffer);
 
 	    //to move quad around screen for drawing modes
 	    final float offset = 150;
@@ -136,7 +137,7 @@ public class OGLES2Renderer implements GLSurfaceView.Renderer {
 	        , rightX, bottomY - offset
 	        , leftX, topY - offset
 	        , rightX, topY - offset
-	    };	    
+	    };
         verticesBuffer = ByteBuffer.allocateDirect(verticesTriangle.length
                 * FLOAT_SIZE).order(ByteOrder.nativeOrder()).asFloatBuffer();
         verticesBuffer.put(verticesTriangle).position(0);
