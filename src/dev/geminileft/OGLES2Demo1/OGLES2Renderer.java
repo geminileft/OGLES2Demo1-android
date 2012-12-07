@@ -22,7 +22,6 @@ public class OGLES2Renderer implements GLSurfaceView.Renderer {
     
 	public OGLES2Renderer(GLSurfaceView view) {
 		super();
-		
 		//set OGLES version
         view.setEGLContextClientVersion(2);
 	}
@@ -35,8 +34,8 @@ public class OGLES2Renderer implements GLSurfaceView.Renderer {
 		fSource = GraphicsUtils.readShaderFile("texture.fsh");
 		final int progId = GraphicsUtils.createProgram(vSource, fSource);
 		GraphicsUtils.activateProgram(progId);
+		//set clear color
 		GLES20.glClearColor(0, 0, 0, 1);
-		
 		//read attribute locations and enable
 		maColor = GLES20.glGetAttribLocation(progId, "aColor");
 		GLES20.glEnableVertexAttribArray(maColor);
@@ -56,17 +55,11 @@ public class OGLES2Renderer implements GLSurfaceView.Renderer {
 	    Matrix.orthoM(projMatrix, 0, 0, width, 0, height, -1, 1);
 	    float viewMatrix[] = new float[16];
 	    Matrix.setIdentityM(viewMatrix, 0);
-	    float texMatrix[] = new float[16];
-	    Matrix.setIdentityM(texMatrix, 0);
-	    int uProjectionMatrix = GLES20.glGetUniformLocation(GraphicsUtils.currentProgramId(), "uProjectionMatrix");
-	    int uViewMatrix = GLES20.glGetUniformLocation(GraphicsUtils.currentProgramId(), "uViewMatrix");
-	    int uTextureMatrix = GLES20.glGetUniformLocation(GraphicsUtils.currentProgramId(), "uTextureMatrix");
-	    int uColorOnly = GLES20.glGetUniformLocation(GraphicsUtils.currentProgramId(), "uColorOnly");
+	    final int progId = GraphicsUtils.currentProgramId();
+	    int uProjectionMatrix = GLES20.glGetUniformLocation(progId, "uProjectionMatrix");
+	    int uViewMatrix = GLES20.glGetUniformLocation(progId, "uViewMatrix");
 	    GLES20.glUniformMatrix4fv(uProjectionMatrix, 1, false, projMatrix, 0);
 	    GLES20.glUniformMatrix4fv(uViewMatrix, 1, false, viewMatrix, 0);
-	    GLES20.glUniformMatrix4fv(uTextureMatrix, 1, false, texMatrix, 0);
-	    GLES20.glUniform1f(uColorOnly, 1);
-	    
 	}
 
 	@Override
