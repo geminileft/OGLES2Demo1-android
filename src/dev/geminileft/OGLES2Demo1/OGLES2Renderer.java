@@ -30,8 +30,8 @@ public class OGLES2Renderer implements GLSurfaceView.Renderer {
 	public void onSurfaceCreated(GL10 arg0, EGLConfig arg1) {
 		String vSource;
 		String fSource;
-		vSource = GraphicsUtils.readShaderFile("texture.vsh");
-		fSource = GraphicsUtils.readShaderFile("texture.fsh");
+		vSource = GraphicsUtils.readShaderFile("basic.vsh");
+		fSource = GraphicsUtils.readShaderFile("basic.fsh");
 		final int progId = GraphicsUtils.createProgram(vSource, fSource);
 		GraphicsUtils.activateProgram(progId);
 		//set clear color
