@@ -57,9 +57,7 @@ public class OGLES2Renderer implements GLSurfaceView.Renderer {
 	    Matrix.setIdentityM(viewMatrix, 0);
 	    final int progId = GraphicsUtils.currentProgramId();
 	    int uProjectionMatrix = GLES20.glGetUniformLocation(progId, "uProjectionMatrix");
-	    int uViewMatrix = GLES20.glGetUniformLocation(progId, "uViewMatrix");
 	    GLES20.glUniformMatrix4fv(uProjectionMatrix, 1, false, projMatrix, 0);
-	    GLES20.glUniformMatrix4fv(uViewMatrix, 1, false, viewMatrix, 0);
 	}
 
 	@Override
