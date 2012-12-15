@@ -53,8 +53,6 @@ public class OGLES2Renderer implements GLSurfaceView.Renderer {
 	    //set matrices and pass to shader
 	    float projMatrix[] = new float[16];
 	    Matrix.orthoM(projMatrix, 0, 0, width, 0, height, -1, 1);
-	    float viewMatrix[] = new float[16];
-	    Matrix.setIdentityM(viewMatrix, 0);
 	    final int progId = GraphicsUtils.currentProgramId();
 	    int uProjectionMatrix = GLES20.glGetUniformLocation(progId, "uProjectionMatrix");
 	    GLES20.glUniformMatrix4fv(uProjectionMatrix, 1, false, projMatrix, 0);
